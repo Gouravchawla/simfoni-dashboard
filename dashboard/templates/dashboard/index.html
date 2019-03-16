@@ -28,6 +28,10 @@
         font-size: 3.5rem;
       }
     }
+    .dropdown-menu {
+      max-height: 200px;
+      overflow-y: auto;
+    }
   </style>
 </head>
 <body ng-controller="DashboardCtrl" >
@@ -70,6 +74,7 @@
             {[{ selectedBuyer }]}
           </button>
           <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" ng-click="setSelectedBuyer()">Buyer</a>
             <a class="dropdown-item" href="#" ng-click="setSelectedBuyer(buyer)" ng-repeat="buyer in buyers">{[{ buyer }]}</a>
           </div>
         </div>
@@ -79,6 +84,7 @@
             {[{ selectedDepartment }]}
           </button>
           <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" ng-click="setSelectedDepartment()">Department</a>
             <a class="dropdown-item" href="#" ng-click="setSelectedDepartment(department)" ng-repeat="department in departments">{[{ department }]}</a>
           </div>
         </div>
@@ -87,7 +93,8 @@
                   aria-haspopup="true" aria-expanded="false">
             {[{ selectedMember }]}
           </button>
-          <div class="dropdown-menu">
+          <div class="dropdown-menu dropdown-menu">
+            <a class="dropdown-item" href="#" ng-click="setSelectedMember()">Member</a>
             <a class="dropdown-item" href="#" ng-click="setSelectedMember(member)" ng-repeat="member in members">{[{ member }]}</a>
           </div>
         </div>

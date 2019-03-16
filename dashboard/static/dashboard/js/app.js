@@ -93,8 +93,13 @@ angular.module("app", ["highcharts-ng", "daterangepicker", "app.config"])
 
       ///
       function setSelectedBuyer(buyer) {
-        $scope.selectedBuyer = buyer;
-        params.buyer = buyer;
+        if(buyer === undefined) {
+          $scope.selectedBuyer = 'Buyer';
+          params.buyer = '';
+        } else {
+          $scope.selectedBuyer = buyer;
+          params.buyer = buyer;
+        }
 
         dashboardService.getFilteredData(params).then(function(response) {
           console.log("Response: ", response);
@@ -106,8 +111,13 @@ angular.module("app", ["highcharts-ng", "daterangepicker", "app.config"])
       }
 
       function setSelectedDepartment(department) {
-        $scope.selectedDepartment = department;
-        params.department = department;
+        if(department === undefined) {
+          $scope.selectedDepartment = 'Department';
+          params.department = '';
+        } else {
+          $scope.selectedDepartment = department;
+          params.department = department;
+        }
 
         dashboardService.getFilteredData(params).then(function(response) {
           console.log("Response: ", response);
@@ -119,8 +129,13 @@ angular.module("app", ["highcharts-ng", "daterangepicker", "app.config"])
       }
 
       function setSelectedMember(member) {
-        $scope.selectedMember = member;
-        params.member = member;
+        if(member === undefined) {
+          $scope.selectedMember = 'Member';
+          params.member = '';
+        } else {
+          $scope.selectedMember = member;
+          params.member = member;
+        }
 
         dashboardService.getFilteredData(params).then(function(response) {
           console.log("Response: ", response);
