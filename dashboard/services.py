@@ -15,7 +15,7 @@ def get_chart_config(title, categories, series_data, series_name):
             'type': 'column',
             'height': 300,
             'width': 300,
-            'spacingBottom': 60
+            'spacingBottom': 100
         },
         'legend': {
             'enabled': False
@@ -25,6 +25,7 @@ def get_chart_config(title, categories, series_data, series_name):
         },
         'title': {
             'text': title,
+            'useHTML': True,
             'color': '#588BAE',
             'align': 'left',
             'verticalAlign': 'bottom',
@@ -189,8 +190,8 @@ def initial_data(buyer=None, department=None, member=None, start_date=None, end_
     filtered_data = df.loc[df['Quote Selected?'] == 'Yes']
     grouped_data = filtered_data.groupby('Request Date')
 
-    chart['title'] = f"${int(filtered_data['Total Quote Price'].agg(np.sum))} in spend" \
-                     f"(Only on 'Closed Accepted' requests)"
+    chart['title'] = f"${int(filtered_data['Total Quote Price'].agg(np.sum))} in spend " \
+                     f"<small>(Only on 'Closed Accepted' requests)</small>"
     chart['categories'] = []
     chart['series_data'] = []
     for key, value in grouped_data['Total Quote Price'].agg(np.sum).items():
@@ -208,7 +209,7 @@ def initial_data(buyer=None, department=None, member=None, start_date=None, end_
     grouped_data = filtered_data.groupby('Request to Quote Cycle Time')
 
     chart['title'] = f"Avg. {filtered_data['Request to Quote Cycle Time'].agg(np.mean)} days - Request to" \
-                     f" Quote cycle time(Only on quoted requests)"
+                     f" Quote cycle time <small>(Only on quoted requests)</small>"
     chart['categories'] = []
     chart['series_data'] = []
 
@@ -245,7 +246,7 @@ def initial_data(buyer=None, department=None, member=None, start_date=None, end_
     filtered_data = df.loc[df['Status'] == 'Closed Accepted']
     grouped_data = filtered_data.groupby('Request Date')
 
-    chart['title'] = f"${int(df['Savings amount'].agg(np.sum))} in savings (Only on 'Closed Accepted' requests)"
+    chart['title'] = f"${int(df['Savings amount'].agg(np.sum))} in savings <small>(Only on 'Closed Accepted' requests)</small>"
 
     chart['categories'] = []
     chart['series_data'] = []
@@ -265,7 +266,7 @@ def initial_data(buyer=None, department=None, member=None, start_date=None, end_
     grouped_data = filtered_data.groupby('Supplier Response Cycle Time')
 
     chart['title'] = f"Avg. {filtered_data['Supplier Response Cycle Time'].agg(np.mean)} days - Supplier" \
-                     f" response cycle time(Only on quoted requests)"
+                     f" response cycle time <small>(Only on quoted requests)</small>"
     chart['categories'] = []
     chart['series_data'] = []
 
