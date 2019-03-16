@@ -57,10 +57,6 @@
           </div>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
     </div>
   </nav>
 
@@ -113,6 +109,53 @@
     <div class="row">
       <div class="col-sm" ng-repeat="chart in charts">
         <highchart id="chart1" config="chart.chart_config"></highchart>
+      </div>
+    </div>
+    <div class="row mt-5 mb-4">
+      <div class="col">
+        <h5 class="text-muted font-weight-bold">CUSTOM REPORTS</h5>
+      </div>
+      <div class="col">
+        <a ng-click="toggleForm()" class="btn btn-outline-primary float-right">Add Chart</a>
+      </div>
+    </div>
+    <div class="card text-center mb-5" ng-hide="customCharts.length > 0 || addingChart">
+      <div class="card-body">
+        <h5 class="card-title text-muted">You haven't created any custom charts yet. Use the above button to create one.</h5>
+      </div>
+    </div>
+    <div class="card" ng-show="addingChart">
+      <div class="card-header">
+        Create Chart
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Dimensions</label>
+            <select class="form-control" id="exampleFormControlSelect1" ng-model="selectedDimension" ng-options="dimension for dimension in dimensions">
+              <option value="">Select dimension</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Measure</label>
+            <select class="form-control" id="exampleFormControlSelect1" ng-model="selectedMeasure" ng-options="measure for measure in measures">
+              <option value="">Select measure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Aggregate Function</label>
+            <select class="form-control" id="exampleFormControlSelect1" ng-model="selectedAggregateFunction" ng-options="aggregateFunction for aggregateFunction in aggregateFunctions">
+              <option value="">Select Aggregate Function</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-secondary" ng-click="toggleForm()">Cancel</button>
+          <button type="button" class="btn btn-primary" ng-click="createChart()">Create Chart</button>
+        </form>
+      </div>
+    </div>
+    <div class="row" ng-hide="addingChart">
+      <div class="col-sm" ng-repeat="customChart in customCharts">
+        <highchart id="chart2" config="customChart.chart_config"></highchart>
       </div>
     </div>
   </main><!-- /.container -->

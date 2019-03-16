@@ -7,6 +7,32 @@ angular.module("app", ["highcharts-ng", "daterangepicker", "app.config"])
     }])
     .controller('DashboardCtrl', ['$scope', 'dashboardService', 'SERVER_CONFIG', function ($scope, dashboardService, SERVER_CONFIG) {
 
+      $scope.dimensions = [
+          'Company',
+          'Requester Name',
+          'Department',
+          'Category',
+          'Description',
+          'Delivery Location',
+          'Emergency',
+          'Status',
+          'Buyer'
+      ];
+      $scope.measures = [
+          'Request Number',
+          'Request Date',
+          'Total Estimated Price',
+          'Date Required',
+          'Sample Required',
+          'Total Quote Price',
+          'Savings amount',
+          'Savings %'
+      ];
+      $scope.aggregateFunctions = [
+          'size',
+          'sum',
+          'mean'
+      ];
       $scope.buyers = SERVER_CONFIG.INITIAL_DATA.buyers;
       $scope.departments = SERVER_CONFIG.INITIAL_DATA.departments;
       $scope.members = SERVER_CONFIG.INITIAL_DATA.members;
@@ -52,6 +78,10 @@ angular.module("app", ["highcharts-ng", "daterangepicker", "app.config"])
         }
       };
       $scope.charts = SERVER_CONFIG.INITIAL_DATA.default_charts;
+      $scope.customCharts = [];
+      $scope.addingChart = false;
+      $scope.createChart = createChart;
+      $scope.toggleForm = toggleForm;
 
       $scope.selectedBuyer = 'Buyer';
       $scope.setSelectedBuyer = setSelectedBuyer;
@@ -100,14 +130,37 @@ angular.module("app", ["highcharts-ng", "daterangepicker", "app.config"])
           $scope.members = response.data.data.members;
         });
       }
+
+      function toggleForm() {
+        $scope.addingChart = !$scope.addingChart;
+      }
+
+      function createChart() {
+        var chartParams = {
+          dimension: $scope.selectedDimension,
+          measure: $scope.selectedMeasure,
+          aggregateFunction: $scope.selectedAggregateFunction
+        };
+
+        dashboardService.generateChart(chartParams).then(function(response) {
+          console.log("Generate chart response: ", response);
+          $scope.customCharts.push(response.data.data);
+          $scope.addingChart = !$scope.addingChart;
+        });
+      }
 }])
     .factory('dashboardService', ['$http', function ($http) {
 
       return {
-        getFilteredData: getFilteredData
+        getFilteredData: getFilteredData,
+        generateChart: generateChart
       };
 
       function getFilteredData(params) {
         return $http.get('/dashboard/data/', {params: params});
+      }
+
+      function generateChart(params) {
+        return $http.get('/dashboard/create-chart/', {params: params})
       }
     }]);

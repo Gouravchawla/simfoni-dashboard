@@ -4,7 +4,7 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from .services import initial_data
+from .services import generate_chart, initial_data
 
 START_DATE = '"2018-01-01T00:00:00.000Z"'
 END_DATE = '"2018-01-31T00:00:00.000Z"'
@@ -28,4 +28,17 @@ def data(request):
 
     return JsonResponse(
         {'data': initial_data(buyer, department, member, start_date, end_date)}
+    )
+
+
+def create_chart(request):
+    print("Chart creation view: {}".format(request.GET))
+    dimension = request.GET.get('dimension')
+    measure = request.GET.get('measure')
+    aggregate_function = request.GET.get('aggregateFunction')
+
+    return JsonResponse(
+        {
+            'data': generate_chart(dimension, measure, aggregate_function)
+        }
     )
