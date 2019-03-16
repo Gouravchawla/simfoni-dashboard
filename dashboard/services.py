@@ -118,8 +118,8 @@ def read_data_file():
     xl = pd.ExcelFile(file)
 
     # Load a sheet into data frame
-    df = xl.parse('TestData')
-    # df = xl.parse('Raw data')
+    # df = xl.parse('TestData')
+    df = xl.parse('Raw data')
 
     # Transform/Clean data
     df['Request Date'] = df['Request Date'].transform(lambda x: datetime.strptime(x, '%d/%m/%Y'))
