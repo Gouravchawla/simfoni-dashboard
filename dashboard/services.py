@@ -167,7 +167,7 @@ def initial_data(buyer=None, department=None, member=None, start_date=None, end_
     filtered_data = df.loc[df['Quote Selected?'] == 'Yes']
     grouped_data = filtered_data.groupby('Request to Quote Cycle Time')
 
-    chart['title'] = f"Avg. {int(filtered_data['Request to Quote Cycle Time'].agg(np.mean))} days - Request to" \
+    chart['title'] = f"Avg. {filtered_data['Request to Quote Cycle Time'].agg(np.mean)} days - Request to" \
                      f" Quote cycle time(Only on quoted requests)"
     chart['categories'] = []
     chart['series_data'] = []
@@ -224,7 +224,7 @@ def initial_data(buyer=None, department=None, member=None, start_date=None, end_
     filtered_data = df.loc[df['Status'] == 'Closed Accepted']
     grouped_data = filtered_data.groupby('Supplier Response Cycle Time')
 
-    chart['title'] = f"Avg. {int(filtered_data['Supplier Response Cycle Time'].agg(np.mean))} days - Supplier" \
+    chart['title'] = f"Avg. {filtered_data['Supplier Response Cycle Time'].agg(np.mean)} days - Supplier" \
                      f" response cycle time(Only on quoted requests)"
     chart['categories'] = []
     chart['series_data'] = []
